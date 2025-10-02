@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title> Surprise </title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        display: flex;
+        background: #000;
+        color: silver;
+        overflow: hidden;
+        font-size: 26px;
+      }
+      #developer, #question, #buttons, #gift, #sad {
+        opacity: 0;
+        transition: opacity 1.5s;
+        z-index: 10;
+        position: relative;
+      }
+      #buttons {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        gap: 60px;
+      }
+      button {
+        padding: 20px 34px; 
+        font-size: 26px;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        background: #ff69b4;
+        color: white;
+        transition: transform 0.2s, background 0.3s;
+      }
+
+      button:hover {
+        transform: scale(1.1);
+        background: #ff1493;
+      }
+     
+      #gift {
+        opacity: 0;
+        transition: opacity 1.5s;
+        color: #fff;
+        font-family: 'Georgia', serif;
+        text-shadow: 2px 2px 8px #ff69b4, 0 0 10px #ff1493;
+        transform: scale(0.8);
+        transition: all 1s ease;
+      }
+
+      #gift.show {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      #gift h2 {
+        font-size: 2em;
+        animation: bounce 1s ease forwards;
+        margin-bottom: 10px;
+        color: gold;
+      }
+
+      #gift p {
+        font-size: 1.1em;
+        line-height: 1.5;
+        animation: fadeInUp 1s ease forwards;
+        color: #ffd700;
+      }
+
+      @keyframes bounce {
+        0% { transform: scale(0.5); opacity: 0; }
+        60% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(1); }
+      }
+
+      @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+
+      #sad {
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        font-size: 24px;
+      }
+      
+      #magic {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 5;
+      }
+
+      .spark {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        animation: fly 1s linear forwards;
+        box-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+      }
+
+      @keyframes fly {
+        0% { transform: translate(0,0) scale(1); opacity: 1; }
+        100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="developer">
+      <h1> Developed by Starling Shylla </h1>
+    </div>
+    <div id="question"> 
+      <h1> I have gift for you. </h1>
+      <h1> Do you wanna see it? </h1>
+    </div>
+    <div id="buttons">
+      <button id="YesBtn"> Yes </button>
+      <button id="NoBtn"> No </button>
+    </div>
+    <div id="gift">
+      <h2>💖 Happy Birthday, Iaineh 💖</h2>
+      <p>On this your special day, I thank God for bringing you into my life.  
+      You have always supported me, stayed by my side, and made me feel good when I was down.  
+      You are truly a blessing from the Lord. 🙏</p>
+
+      <p>May God bless you with wisdom, joy, and strength.  
+      May He guide your steps and fill your heart with peace and love.  
+      “The Lord bless you and keep you; the Lord make His face shine on you and be gracious to you” (Numbers 6:24-25).</p>
+
+      <h3>🎉 Wishing you a joyful and blessed 10th October 🎉</h3>
+      <p>Always remember, you are wonderfully made and deeply loved by God 💕</p>
+    </div>
+    <div id="sad">
+      <h3> Surely, I know you don't deserve it from me.</h3>
+      <h3> Thanks for all, Goodbye I won't come again </h3>
+    </div>
+    <div id="magic"></div>
+
+    <script>
+      const developer = document.getElementById("developer");
+      const question = document.getElementById("question");
+      const buttons = document.getElementById("buttons");
+      const gift = document.getElementById("gift");
+      const sad = document.getElementById("sad");
+      const magic = document.getElementById("magic");
+      
+      question.style.opacity = 0;
+      buttons.style.opacity = 0;
+      gift.style.opacity = 0;
+      sad.style.opacity = 0;
+      developer.style.opacity = 1;
+
+      setTimeout(() => {
+        developer.style.opacity = 0;
+        setTimeout(() => {
+          developer.style.display = "none";
+          question.style.opacity = 1;
+          buttons.style.opacity = 1;
+        }, 1500);
+      }, 3000);
+
+      function createMagic() {
+        const colors = ["red", "blue", "lime", "cyan", "orange", "magenta", "gold", "white"];
+        for (let i = 0; i < 150; i++) {
+          const spark = document.createElement('div');
+          spark.classList.add('spark');
+          spark.style.left = Math.random() * 100 + "%";
+          spark.style.top = Math.random() * 100 + "%";
+          spark.style.background = colors[Math.floor(Math.random() * colors.length)];
+          spark.style.setProperty('--x', (Math.random() * 300 - 150) + 'px');
+          spark.style.setProperty('--y', (Math.random() * -300) + 'px');
+          magic.appendChild(spark);
+          setTimeout(() => spark.remove(), 1000);
+        }
+      }
+
+      document.getElementById("YesBtn").addEventListener("click", () => {
+        question.style.opacity = 0;
+        buttons.style.opacity = 0;
+        createMagic();
+
+        document.body.style.backgroundImage = "url('iai.jpg')";
+        document.body.style.backgroundPosition = "center";
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundRepeat = "no-repeat";
+
+        setTimeout(() => {
+          question.style.display = "none";
+          buttons.style.display = "none";
+          gift.style.opacity = 1;
+        }, 500);
+      });
+
+      document.getElementById("NoBtn").addEventListener("click", () => {
+        question.style.opacity = 0;
+        buttons.style.opacity = 0;
+        // reset background if No
+        document.body.style.backgroundImage = "none";
+        setTimeout(() => {
+          question.style.display = "none";
+          buttons.style.display = "none";
+          sad.style.opacity = 1;
+        }, 500);
+      });
+    </script>
+  </body>
+</html>
